@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แผนการเรียนรู้ภาษาจีน Pinyin 7 วัน</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: #f8fafc;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #118AB2;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="text-[#073B4C]">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-6xl">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#118AB2] mb-2">พิชิต Pinyin ใน 7 วัน</h1>
+            <p class="text-lg md:text-xl text-gray-600">คู่มือสำหรับผู้เริ่มต้นสู่การสนทนาในชีวิตประจำวัน</p>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="md:col-span-2 bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-[#073B4C] mb-4">ภาพรวมแผนการเรียนรู้</h2>
+                <p class="mb-6 text-gray-700">แผนการนี้ถูกออกแบบมาเพื่อสร้างรากฐานที่แข็งแกร่งด้านการออกเสียงภาษาจีน โดยเน้นที่การฝึกฝนอย่างสม่ำเสมอและเพิ่มความซับซ้อนขึ้นทีละน้อยในแต่ละวัน เพื่อให้คุณสามารถนำไปใช้สื่อสารได้อย่างมั่นใจภายในหนึ่งสัปดาห์</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="flex flex-col items-center justify-center">
+                        <h3 class="text-xl font-bold mb-4">สัดส่วนการเรียนรู้</h3>
+                        <div class="chart-container h-64 md:h-72">
+                            <canvas id="learningFocusChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center justify-center">
+                        <h3 class="text-xl font-bold mb-4">ระยะเวลาฝึกฝนในแต่ละวัน (นาที)</h3>
+                        <div class="chart-container h-64 md:h-72">
+                            <canvas id="studyTimeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:col-span-2 bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-[#073B4C] mb-4">เส้นทางการเรียนรู้ 7 วัน</h2>
+                <div class="relative wrap overflow-hidden p-4 h-full">
+                    <div class="border-2-2 absolute border-opacity-20 border-gray-700 h-full border" style="left: 50%"></div>
+                    <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="z-20 flex items-center order-1 bg-[#118AB2] shadow-xl w-12 h-12 rounded-full">
+                            <h1 class="mx-auto font-bold text-lg text-white">1</h1>
+                        </div>
+                        <div class="order-1 bg-[#118AB2] bg-opacity-20 rounded-lg shadow-xl w-5/12 px-6 py-4">
+                            <h3 class="font-bold text-[#073B4C] text-xl">รากฐาน: วรรณยุกต์ (Tones)</h3>
+                            <p class="text-sm leading-snug tracking-wide text-gray-700">เรียนรู้เสียงวรรณยุกต์ทั้ง 4 เสียง ซึ่งเป็นหัวใจของการออกเสียงภาษาจีน</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="z-20 flex items-center order-1 bg-[#06D6A0] shadow-xl w-12 h-12 rounded-full">
+                            <h1 class="mx-auto text-white font-bold text-lg">2-3</h1>
+                        </div>
+                        <div class="order-1 bg-[#06D6A0] bg-opacity-20 rounded-lg shadow-xl w-5/12 px-6 py-4">
+                            <h3 class="font-bold text-[#073B4C] text-xl">ส่วนประกอบ: พยัญชนะและสระ</h3>
+                            <p class="text-sm leading-snug tracking-wide text-gray-700">ทำความรู้จักพยัญชนะต้น (Initials) และสระ (Finals) เพื่อผสมเป็นคำ</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8 flex justify-between items-center w-full right-timeline">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="z-20 flex items-center order-1 bg-[#FFD166] shadow-xl w-12 h-12 rounded-full">
+                            <h1 class="mx-auto font-bold text-lg text-white">4-5</h1>
+                        </div>
+                        <div class="order-1 bg-[#FFD166] bg-opacity-20 rounded-lg shadow-xl w-5/12 px-6 py-4">
+                            <h3 class="font-bold text-[#073B4C] text-xl">การสนทนาเบื้องต้น</h3>
+                            <p class="text-sm leading-snug tracking-wide text-gray-700">ฝึกทักทาย, แนะนำตัว, นับเลข และตั้งคำถามง่ายๆ ที่ใช้ได้จริง</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-8 flex justify-between flex-row-reverse items-center w-full left-timeline">
+                        <div class="order-1 w-5/12"></div>
+                        <div class="z-20 flex items-center order-1 bg-[#FF6B6B] shadow-xl w-12 h-12 rounded-full">
+                            <h1 class="mx-auto text-white font-bold text-lg">6-7</h1>
+                        </div>
+                        <div class="order-1 bg-[#FF6B6B] bg-opacity-20 rounded-lg shadow-xl w-5/12 px-6 py-4">
+                            <h3 class="font-bold text-[#073B4C] text-xl">ประยุกต์ใช้และทบทวน</h3>
+                            <p class="text-sm leading-snug tracking-wide text-gray-700">ขยายคลังคำศัพท์ในชีวิตประจำวันและฝึกสนทนาเพื่อความคล่องแคล่ว</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GEMINI API TOOLS SECTION -->
+            <div class="md:col-span-2 bg-white rounded-lg shadow-2xl p-6 border-4 border-[#FFD166]">
+                <h2 class="text-2xl font-bold text-[#FF6B6B] mb-4">เครื่องมือฝึกภาษา ✨ (Powered by Gemini)</h2>
+                <p class="mb-6 text-gray-700">ใช้เครื่องมือด้านล่างนี้เพื่อสร้างบทสนทนาและฝึกการออกเสียง Pinyin ได้ทันที</p>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                    <!-- Conversation Generator -->
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-bold text-[#118AB2] mb-3">1. สร้างบทสนทนา ✨</h3>
+                        <p class="text-sm text-gray-600 mb-3">ป้อนหัวข้อที่คุณต้องการฝึกฝน (เช่น "การถามเวลา" หรือ "สั่งอาหาร")</p>
+                        <input type="text" id="conversationTopic" placeholder="ป้อนหัวข้อสนทนา (เช่น การทักทาย, สั่งกาแฟ)" class="w-full p-2 border rounded-md mb-3 focus:ring-[#118AB2] focus:border-[#118AB2]">
+                        <button id="generateConversationBtn" onclick="generateConversation()" class="w-full bg-[#118AB2] hover:bg-[#0c7091] text-white font-bold py-2 px-4 rounded-md transition duration-300 flex items-center justify-center">
+                            <span id="convBtnText">สร้างบทสนทนา Pinyin</span>
+                            <div id="convLoading" class="loading-spinner ml-2 hidden"></div>
+                        </button>
+                        <div id="conversationOutput" class="mt-4 p-3 bg-white border border-dashed border-[#FFD166] rounded-md min-h-[50px] overflow-auto">
+                            <p class="text-sm text-gray-500">บทสนทนาจะปรากฏที่นี่...</p>
+                        </div>
+                    </div>
+
+                    <!-- Pronunciation Model (TTS) -->
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <h3 class="text-xl font-bold text-[#06D6A0] mb-3">2. ฝึกการออกเสียง (TTS) ✨</h3>
+                        <p class="text-sm text-gray-600 mb-3">ป้อน Pinyin หรือประโยคภาษาจีนที่คุณต้องการฟังการออกเสียง</p>
+                        <input type="text" id="pinyinInput" value="Nǐ hǎo ma?" placeholder="ป้อน Pinyin" class="w-full p-2 border rounded-md mb-3 focus:ring-[#06D6A0] focus:border-[#06D6A0]">
+                        <button id="ttsButton" onclick="generateAndPlayAudio()" class="w-full bg-[#06D6A0] hover:bg-[#04b082] text-white font-bold py-2 px-4 rounded-md transition duration-300 flex items-center justify-center">
+                            <span id="ttsBtnText">ฟังเสียง Pinyin!</span>
+                            <div id="ttsLoading" class="loading-spinner ml-2 hidden"></div>
+                        </button>
+                        <div class="mt-4 flex justify-center items-center">
+                             <audio id="pinyinAudio" controls class="w-full hidden"></audio>
+                            <p id="ttsMessage" class="text-sm text-gray-500">เสียงจะปรากฏที่นี่เมื่อสร้างเสร็จ</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- END GEMINI API TOOLS SECTION -->
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-[#073B4C] mb-4">การสะสมคลังคำศัพท์</h2>
+                <p class="mb-6 text-gray-700">กราฟนี้แสดงให้เห็นถึงจำนวนคำศัพท์และวลีใหม่ที่คุณจะได้เรียนรู้สะสมในแต่ละวัน จะเห็นว่าความรู้ของคุณจะเพิ่มขึ้นอย่างก้าวกระโดดในช่วงกลางสัปดาห์</p>
+                <div class="chart-container">
+                    <canvas id="vocabGrowthChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold text-[#073B4C] mb-4">เคล็ดลับสู่ความสำเร็จ</h2>
+                 <p class="mb-6 text-gray-700">หัวใจสำคัญคือการฝึกฝนอย่างสม่ำเสมอ ใช้หลักการ "ฟัง-เลียนแบบ-พูดซ้ำ" เพื่อให้การออกเสียงของคุณใกล้เคียงเจ้าของภาษามากที่สุด</p>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <span class="text-[#06D6A0] text-2xl mr-3">✔</span>
+                        <div>
+                            <h3 class="font-bold">ใช้แอปพจนานุกรม</h3>
+                            <p class="text-gray-600">ฟังเสียงเจ้าของภาษาเสมอเพื่อตรวจสอบการออกเสียงที่ถูกต้อง</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-[#06D6A0] text-2xl mr-3">✔</span>
+                        <div>
+                            <h3 class="font-bold">อัดเสียงตัวเอง</h3>
+                            <p class="text-gray-600">เปรียบเทียบเสียงของคุณกับเจ้าของภาษาเพื่อหาจุดที่ต้องปรับปรุง โดยเฉพาะเรื่องวรรณยุกต์</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-[#06D6A0] text-2xl mr-3">✔</span>
+                         <div>
+                            <h3 class="font-bold">อย่ากลัวที่จะผิดพลาด</h3>
+                            <p class="text-gray-600">การเรียนรู้ภาษาใหม่ต้องอาศัยความกล้า ความผิดพลาดคือส่วนหนึ่งของกระบวนการเรียนรู้</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </main>
+
+        <footer class="text-center mt-12 py-6 border-t">
+            <p class="text-gray-600">เริ่มต้นเส้นทางการเรียนรู้ภาษาจีนของคุณวันนี้!</p>
+        </footer>
+
+    </div>
+
+    <script>
+        const apiKey = ""; 
+
+        function base64ToArrayBuffer(base64) {
+            const binaryString = atob(base64);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes.buffer;
+        }
+
+        function pcmToWav(pcm16, sampleRate) {
+            const numChannels = 1; 
+            const bytesPerSample = 2; 
+            const buffer = new ArrayBuffer(44 + pcm16.length * bytesPerSample);
+            const view = new DataView(buffer);
+            let offset = 0;
+
+            function writeString(s) {
+                for (let i = 0; i < s.length; i++) {
+                    view.setUint8(offset + i, s.charCodeAt(i));
+                }
+                offset += s.length;
+            }
+
+            function writeUint32(i) {
+                view.setUint32(offset, i, true);
+                offset += 4;
+            }
+
+            function writeUint16(i) {
+                view.setUint16(offset, i, true);
+                offset += 2;
+            }
+
+            writeString('RIFF');
+            writeUint32(36 + pcm16.length * bytesPerSample); 
+            writeString('WAVE');
+            writeString('fmt ');
+            writeUint32(16); 
+            writeUint16(1); 
+            writeUint16(numChannels);
+            writeUint32(sampleRate);
+            writeUint32(sampleRate * numChannels * bytesPerSample);
+            writeUint16(numChannels * bytesPerSample); 
+            writeUint16(16); 
+            writeString('data');
+            writeUint32(pcm16.length * bytesPerSample);
+
+            for (let i = 0; i < pcm16.length; i++, offset += bytesPerSample) {
+                view.setInt16(offset, pcm16[i], true);
+            }
+
+            return new Blob([view], { type: 'audio/wav' });
+        }
+
+        async function fetchWithBackoff(url, options, maxRetries = 5) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (response.ok) {
+                        return response;
+                    }
+                    if (response.status === 429 && i < maxRetries - 1) {
+                        const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        continue;
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                } catch (error) {
+                    if (i === maxRetries - 1) throw error;
+                    const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+        }
+
+        // --- TTS Implementation ---
+
+        async function generateAndPlayAudio() {
+            const pinyinInput = document.getElementById('pinyinInput').value.trim();
+            const ttsButton = document.getElementById('ttsButton');
+            const ttsBtnText = document.getElementById('ttsBtnText');
+            const ttsLoading = document.getElementById('ttsLoading');
+            const pinyinAudio = document.getElementById('pinyinAudio');
+            const ttsMessage = document.getElementById('ttsMessage');
+
+            if (!pinyinInput) {
+                ttsMessage.textContent = 'กรุณาป้อน Pinyin ที่ต้องการฝึกฝน';
+                return;
+            }
+
+            ttsButton.disabled = true;
+            ttsBtnText.textContent = 'กำลังสร้างเสียง...';
+            ttsLoading.classList.remove('hidden');
+            ttsMessage.textContent = 'กำลังสร้างไฟล์เสียง...';
+            pinyinAudio.classList.add('hidden');
+            pinyinAudio.removeAttribute('src');
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{
+                    parts: [{ text: pinyinInput }]
+                }],
+                generationConfig: {
+                    responseModalities: ["AUDIO"],
+                    speechConfig: {
+                        voiceConfig: {
+                            prebuiltVoiceConfig: { voiceName: "Achird" }
+                        }
+                    }
+                },
+                model: "gemini-2.5-flash-preview-tts"
+            };
+
+            try {
+                const response = await fetchWithBackoff(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const part = result?.candidates?.[0]?.content?.parts?.[0];
+                const audioData = part?.inlineData?.data;
+                const mimeType = part?.inlineData?.mimeType;
+
+                if (audioData && mimeType && mimeType.startsWith("audio/L16")) {
+                    // Extract sample rate from mimeType, e.g., audio/L16;rate=24000
+                    const rateMatch = mimeType.match(/rate=(\d+)/);
+                    const sampleRate = rateMatch ? parseInt(rateMatch[1], 10) : 24000; 
+
+                    const pcmData = base64ToArrayBuffer(audioData);
+                    const pcm16 = new Int16Array(pcmData);
+                    const wavBlob = pcmToWav(pcm16, sampleRate);
+                    const audioUrl = URL.createObjectURL(wavBlob);
+                    
+                    pinyinAudio.src = audioUrl;
+                    pinyinAudio.classList.remove('hidden');
+                    ttsMessage.textContent = 'พร้อมฟังแล้ว! (เสียงจะถูกเล่นเมื่อกดปุ่ม ▶)';
+                } else {
+                    ttsMessage.textContent = 'เกิดข้อผิดพลาดในการสร้างเสียง: ' + (result?.error?.message || 'รูปแบบข้อมูลไม่ถูกต้อง');
+                    console.error("TTS API Error:", result);
+                }
+            } catch (error) {
+                ttsMessage.textContent = 'เกิดข้อผิดพลาดในการเชื่อมต่อกับ API';
+                console.error("Fetch error:", error);
+            } finally {
+                ttsButton.disabled = false;
+                ttsBtnText.textContent = 'ฟังเสียง Pinyin!';
+                ttsLoading.classList.add('hidden');
+            }
+        }
+
+        // --- Conversation Generator Implementation ---
+
+        async function generateConversation() {
+            const topic = document.getElementById('conversationTopic').value.trim();
+            const convBtn = document.getElementById('generateConversationBtn');
+            const convBtnText = document.getElementById('convBtnText');
+            const convLoading = document.getElementById('convLoading');
+            const outputDiv = document.getElementById('conversationOutput');
+
+            if (!topic) {
+                outputDiv.innerHTML = '<p class="text-sm text-[#FF6B6B] font-bold">กรุณาป้อนหัวข้อสนทนาที่ต้องการฝึกฝน</p>';
+                return;
+            }
+
+            convBtn.disabled = true;
+            convBtnText.textContent = 'กำลังสร้างบทสนทนา...';
+            convLoading.classList.remove('hidden');
+            outputDiv.innerHTML = '<p class="text-sm text-gray-500">กำลังประมวลผลหัวข้อ...</p>';
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            const userPrompt = `Generate a short, simple, 4-line conversational dialogue between two beginner Chinese speakers (A and B) about the topic: "${topic}". The response must use Pinyin only, including correct tones, and must be easily understandable based on the Pinyin 7-day plan (Day 4-7 vocabulary). Provide the dialogue in Pinyin and then a full Thai translation.`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userPrompt }] }],
+                systemInstruction: {
+                    parts: [{ text: "You are a language tutor specialized in creating beginner Pinyin dialogues for daily conversation practice. Format the output as a JSON object with 'pinyin_dialogue' (string with Pinyin) and 'thai_translation' (string with Thai translation). Do not include Hanzi." }]
+                },
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: {
+                        type: "OBJECT",
+                        properties: {
+                            "pinyin_dialogue": { "type": "STRING", "description": "The 4-line Pinyin dialogue." },
+                            "thai_translation": { "type": "STRING", "description": "The full Thai translation of the dialogue." }
+                        },
+                        "propertyOrdering": ["pinyin_dialogue", "thai_translation"]
+                    }
+                }
+            };
+
+            try {
+                const response = await fetchWithBackoff(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                const jsonText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (jsonText) {
+                    const parsedJson = JSON.parse(jsonText);
+                    const dialogue = parsedJson.pinyin_dialogue.replace(/\n/g, '<br>');
+                    const translation = parsedJson.thai_translation.replace(/\n/g, '<br>');
+
+                    outputDiv.innerHTML = `
+                        <p class="font-bold text-[#073B4C] mb-2">บทสนทนา Pinyin:</p>
+                        <p class="text-lg text-[#FF6B6B] mb-4">${dialogue}</p>
+                        <p class="font-bold text-[#073B4C] mb-2">คำแปลภาษาไทย:</p>
+                        <p class="text-base text-gray-700">${translation}</p>
+                    `;
+                } else {
+                    outputDiv.innerHTML = `<p class="text-sm text-[#FF6B6B] font-bold">ไม่สามารถสร้างบทสนทนาได้: ${result?.error?.message || 'ข้อความตอบกลับว่างเปล่า'}</p>`;
+                    console.error("Conversation API Error:", result);
+                }
+            } catch (error) {
+                outputDiv.innerHTML = '<p class="text-sm text-[#FF6B6B] font-bold">เกิดข้อผิดพลาดในการเชื่อมต่อหรือประมวลผลข้อมูล</p>';
+                console.error("Fetch or Parse Error:", error);
+            } finally {
+                convBtn.disabled = false;
+                convBtnText.textContent = 'สร้างบทสนทนา Pinyin';
+                convLoading.classList.add('hidden');
+            }
+        }
+
+        // --- Chart.js Initialization (Existing Code) ---
+
+        const tooltipTitleCallback = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            } else {
+                              return label;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        const vibrantColors = {
+            red: '#FF6B6B',
+            yellow: '#FFD166',
+            green: '#06D6A0',
+            blue: '#118AB2',
+            navy: '#073B4C'
+        };
+
+        const learningFocusCtx = document.getElementById('learningFocusChart').getContext('2d');
+        new Chart(learningFocusCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['การออกเสียง (Phonetics)', 'คำศัพท์และวลี', 'การสนทนา'],
+                datasets: [{
+                    data: [40, 35, 25],
+                    backgroundColor: [vibrantColors.blue, vibrantColors.green, vibrantColors.yellow],
+                    borderColor: '#f8fafc',
+                    borderWidth: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    ...tooltipTitleCallback.plugins,
+                    legend: {
+                        position: 'bottom',
+                    }
+                },
+                cutout: '60%'
+            }
+        });
+        
+        const studyTimeCtx = document.getElementById('studyTimeChart').getContext('2d');
+        new Chart(studyTimeCtx, {
+            type: 'line',
+            data: {
+                labels: ['วันที่ 1', 'วันที่ 2', 'วันที่ 3', 'วันที่ 4', 'วันที่ 5', 'วันที่ 6', 'วันที่ 7'],
+                datasets: [{
+                    label: 'นาทีที่ใช้',
+                    data: [20, 30, 30, 40, 40, 50, 60],
+                    backgroundColor: 'rgba(255, 107, 107, 0.2)',
+                    borderColor: vibrantColors.red,
+                    tension: 0.3,
+                    fill: true,
+                    pointBackgroundColor: vibrantColors.red,
+                    pointRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                 ...tooltipTitleCallback,
+                 scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'นาที'
+                        }
+                    }
+                }
+            }
+        });
+
+        const vocabGrowthCtx = document.getElementById('vocabGrowthChart').getContext('2d');
+        new Chart(vocabGrowthCtx, {
+            type: 'bar',
+            data: {
+                labels: ['วันที่ 1', 'วันที่ 2', 'วันที่ 3', 'วันที่ 4', 'วันที่ 5', 'วันที่ 6', 'วันที่ 7'],
+                datasets: [{
+                    label: 'จำนวนคำศัพท์สะสม',
+                    data: [3, 6, 9, 14, 28, 33, 33],
+                    backgroundColor: vibrantColors.green,
+                    borderColor: vibrantColors.green,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                 ...tooltipTitleCallback,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'จำนวนคำและวลี'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
